@@ -158,7 +158,6 @@ class HomingMissile(_BaseProjectile):
         nearest_dist = 800
         for e in enemies:
             if e.alive:
-                d = math.hypot(e.world_x - self.world_x, e.world_y - self.world_x)
                 dist = math.hypot(e.world_x - self.world_x, e.world_y + 18 - self.world_y)
                 if dist < nearest_dist:
                     nearest_dist = dist
@@ -169,6 +168,7 @@ class HomingMissile(_BaseProjectile):
             dist = math.hypot(dx, dy) or 1
             target_vx = dx / dist * PROJ_SPEED
             target_vy = dy / dist * PROJ_SPEED
+
             steer = 4.0 * dt
             self.vel_x += (target_vx - self.vel_x) * steer
             self.vel_y += (target_vy - self.vel_y) * steer
