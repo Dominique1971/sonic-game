@@ -235,13 +235,14 @@ def _build_music_loop(theme):
 # ---------------------------------------------------------------------------
 
 class SoundManager:
-    def __init__(self):
+    def __init__(self, enabled=True):
         self._sfx = {}
         self._music = {}
         self._music_channel = None
         self._current_theme = None
-        self._enabled = True
-        self._load_all()
+        self._enabled = enabled and pygame.mixer.get_init() is not None
+        if self._enabled:
+            self._load_all()
 
     def _load_all(self):
         defs = {

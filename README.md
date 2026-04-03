@@ -42,9 +42,21 @@ pip install pygame numpy
 
 ### Run the game
 
+From the workspace root:
+
 ```bash
-python3 main.py
+cd sonic-game
+python main.py
 ```
+
+You can also run the current file directly in VS Code or from the repo folder:
+
+```bash
+cd sonic-game
+python game.py
+```
+
+If no audio device is available, the game now falls back to **silent mode** instead of crashing.
 
 ---
 

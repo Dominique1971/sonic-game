@@ -56,7 +56,13 @@ class Particle:
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=1024)
+        audio_enabled = True
+        try:
+            pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=1024)
+        except pygame.error as exc:
+            audio_enabled = False
+            print(f'[Audio] Warning: sound disabled ({exc})')
+
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
@@ -64,7 +70,7 @@ class Game:
         self.font_med = pygame.font.SysFont('Arial', 36, bold=True)
         self.font_small = pygame.font.SysFont('Arial', 22)
         self.font_tiny = pygame.font.SysFont('Arial', 16)
-        self.sound = SoundManager()
+        self.sound = SoundManager(enabled=audio_enabled)
         self.state = 'menu'
         self.current_level_idx = 0
         self.player = None
@@ -665,3 +671,7 @@ class Game:
         else:
             r, g, b = c, 0, x
         return int((r + m) * 255), int((g + m) * 255), int((b + m) * 255)
+
+
+if __name__ == '__main__':
+    Game().run()
