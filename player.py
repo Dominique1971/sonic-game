@@ -157,15 +157,14 @@ class Player:
             self.anim_frame = 0
 
     def take_damage(self):
-        """Return True if player died."""
+        """Return True if the hit was registered (player is not invincible)."""
         if self.invincible_timer > 0:
             return False
         self.invincible_timer = INVINCIBILITY_DURATION
-        self.lives -= 1
-        return self.lives < 0
+        return True
 
     def is_dead(self):
-        return self.lives < 0
+        return self.lives <= 0
 
     # ------------------------------------------------------------------
     # Drawing

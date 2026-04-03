@@ -263,16 +263,16 @@ class SoundManager:
             try:
                 mono = fn()
                 self._sfx[name] = _build_sound(mono)
-            except Exception:
-                pass
+            except Exception as exc:
+                print(f'[Sound] Warning: could not generate SFX "{name}": {exc}')
 
         for theme in _THEME_MELODIES:
             try:
                 mono = _build_music_loop(theme)
                 snd = _build_sound(mono)
                 self._music[theme] = snd
-            except Exception:
-                pass
+            except Exception as exc:
+                print(f'[Sound] Warning: could not generate music for theme "{theme}": {exc}')
 
     def play(self, name):
         if not self._enabled:

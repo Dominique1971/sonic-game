@@ -271,7 +271,7 @@ class Game:
         # Projectiles vs enemies – scoring
         for e in self.level.enemies:
             if not e.alive and e.health <= 0:
-                if hasattr(e, '_scored') and not e._scored:
+                if not getattr(e, '_scored', False):
                     e._scored = True
                     pts = getattr(e.__class__, 'POINTS', 100)
                     self.player.score += pts
@@ -310,7 +310,7 @@ class Game:
             self.player.world_x, self.player.world_y + 20,
             (255, 60, 60), 25, 5
         )
-        if self.player.lives < 0:
+        if self.player.lives <= 0:
             self.sound.play('game_over')
             self.sound.stop_music()
             self.state = 'game_over'
@@ -383,7 +383,7 @@ class Game:
                                 f'SCORE  {self.player.score:07d}', SCREEN_WIDTH // 2, 12)
 
         # Lives (heart icons)
-        for i in range(max(0, self.player.lives + 1)):
+        for i in range(max(0, self.player.lives)):
             hx = 20 + i * 32
             hy = 18
             s = 9
